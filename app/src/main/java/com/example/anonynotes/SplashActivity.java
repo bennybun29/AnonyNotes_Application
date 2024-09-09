@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkInternetConnection() {
         if (isConnected()) {
-            startMainActivity();
+            startSign_Up();
         } else {
             showNotificationBubble("Not connected to the internet");
             // Recheck internet connection every 3 seconds
@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
                 public void run() {
                     if (isConnected()) {
                         hideNotificationBubble();
-                        startMainActivity();
+                        startSign_Up();
                     } else {
                         handler.postDelayed(runnable, 3000);
                     }
@@ -72,8 +72,8 @@ public class SplashActivity extends AppCompatActivity {
         notificationBubble.setVisibility(View.GONE);
     }
 
-    private void startMainActivity() {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+    private void startSign_Up() {
+        Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
         startActivity(intent);
         finish();
     }
