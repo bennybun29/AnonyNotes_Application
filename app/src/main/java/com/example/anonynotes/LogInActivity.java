@@ -4,25 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.TextPaint;
 import android.view.View;
 import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SignUpActivity extends AppCompatActivity {
-
+public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.sign_up);
+        setContentView(R.layout.log_in);
 
         // Set up the "Already have an account? Sign In" clickable text
-        TextView textView = findViewById(R.id.tvLogIn);
-        String text = "Already have an account? Log In";
+        TextView textView = findViewById(R.id.tvSignUp);
+        String text = "Don't have an account? Sign Up";
 
         SpannableString spannableString = new SpannableString(text);
 
@@ -31,14 +29,14 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
                 // Redirect to SignInActivity
-                Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
 
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setUnderlineText(true); // Add underline to the "Sign In"
+                ds.setUnderlineText(false); // Add underline to the "Sign In"
                 ds.setColor(getResources().getColor(android.R.color.black)); // Set color of "Sign In"
             }
         };
