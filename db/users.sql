@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `users`
 --
 
+-- Pacheck nalang ben if okay na tong columns
 CREATE TABLE `users` (
   `user_id` int(50) NOT NULL,
   `user_name` varchar(50) NOT NULL,
