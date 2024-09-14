@@ -6,6 +6,7 @@
 -- Generation Time: Sep 14, 2024 at 03:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
+-- HELLO pacheck nalang ben if may need pa i-add sa users table :)
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
