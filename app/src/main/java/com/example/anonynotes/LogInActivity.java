@@ -36,7 +36,7 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setUnderlineText(false); // Add underline to the "Sign In"
+                ds.setUnderlineText(true); // Add underline to the "Sign In"
                 ds.setColor(getResources().getColor(android.R.color.black)); // Set color of "Sign In"
             }
         };
@@ -46,5 +46,35 @@ public class LogInActivity extends AppCompatActivity {
 
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView forgotPasswordTextView = findViewById(R.id.tvForgotPassword);
+        String forgotPasswordText = "Forgot Password?";
+
+        SpannableString spannableForgotPasswordString = new SpannableString(forgotPasswordText);
+
+        // Make "Forgot Password?" clickable
+        ClickableSpan forgotPasswordClickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                // Redirect to forgot_password class
+                Intent intent = new Intent(LogInActivity.this, forgot_password.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true); // add underline
+                ds.setColor(getResources().getColor(android.R.color.black)); // Set color
+            }
+        };
+
+        // Set the clickable span for the whole text
+        spannableForgotPasswordString.setSpan(forgotPasswordClickableSpan, 0, forgotPasswordText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        forgotPasswordTextView.setText(spannableForgotPasswordString);
+        forgotPasswordTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
+
 }
