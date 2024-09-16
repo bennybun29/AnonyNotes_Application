@@ -34,6 +34,8 @@ CREATE TABLE `comment` (
   `content` text NOT NULL,
   `anonymous` tinyint(1) NOT NULL,
   `created_at` date NOT NULL
+  FOREIGN KEY (note_id) REFERENCES notes(note_id)
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -44,9 +46,13 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `hearts` (
   `heart_id` int(50) NOT NULL,
+  `comment_id` int(50) NOT NULL,
   `note_id` int(50) NOT NULL,
   `user_id` int(50) NOT NULL,
   `created_at` date NOT NULL
+  FOREIGN KEY (comment_id) REFERENCES comment(comment_id)
+  FOREIGN KEY (note_id) REFERENCES notes(note_id)
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -61,6 +67,7 @@ CREATE TABLE `notes` (
   `content` text NOT NULL,
   `anonymous` tinyint(1) NOT NULL,
   `created_at` date NOT NULL
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -99,7 +106,7 @@ ALTER TABLE `hearts`
 -- Indexes for table `notes`
 --
 ALTER TABLE `notes`
-  ADD PRIMARY KEY (`note_id`,`user_id`);
+  ADD PRIMARY KEY (`note_id`);
 
 --
 -- Indexes for table `users`
