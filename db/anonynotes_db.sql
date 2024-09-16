@@ -30,12 +30,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `comment` (
   `comment_id` int(50) NOT NULL,
   `note_id` int(50) NOT NULL COMMENT 'reference notes',
-  `user_id` int(50) NOT NULL COMMENT 'reference users',
+  `user_name` int(50) NOT NULL COMMENT 'reference users',
   `content` text NOT NULL,
   `anonymous` tinyint(1) NOT NULL,
   `created_at` date NOT NULL
   FOREIGN KEY (note_id) REFERENCES notes(note_id)
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  FOREIGN KEY (user_name) REFERENCES users(user_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -48,11 +48,11 @@ CREATE TABLE `hearts` (
   `heart_id` int(50) NOT NULL,
   `comment_id` int(50) NOT NULL,
   `note_id` int(50) NOT NULL,
-  `user_id` int(50) NOT NULL,
+  `user_name` int(50) NOT NULL,
   `created_at` date NOT NULL
   FOREIGN KEY (comment_id) REFERENCES comment(comment_id)
   FOREIGN KEY (note_id) REFERENCES notes(note_id)
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  FOREIGN KEY (user_name) REFERENCES users(user_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -63,11 +63,11 @@ CREATE TABLE `hearts` (
 
 CREATE TABLE `notes` (
   `note_id` int(50) NOT NULL,
-  `user_id` int(50) NOT NULL COMMENT 'reference users',
+  `user_name` int(50) NOT NULL COMMENT 'reference users',
   `content` text NOT NULL,
   `anonymous` tinyint(1) NOT NULL,
   `created_at` date NOT NULL
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  FOREIGN KEY (user_name) REFERENCES users(user_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
