@@ -11,140 +11,80 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
+-- Set character set
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `anonynotes.db`
---
+-- Database: `anonynotes_db2`
+CREATE DATABASE anonynotes_db;
+USE anonynotes_db;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `comment`
---
-
-CREATE TABLE `comment` (
-  `comment_id` int(50) NOT NULL,
-  `note_id` int(50) NOT NULL COMMENT 'reference notes',
-  `user_name` int(50) NOT NULL COMMENT 'reference users',
-  `content` text NOT NULL,
-  `anonymous` tinyint(1) NOT NULL,
-  `created_at` date NOT NULL,
-  FOREIGN KEY (note_id) REFERENCES 'notes'(note_id),
-  FOREIGN KEY (user_name) REFERENCES users(user_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `hearts`
---
-
-CREATE TABLE `hearts` (
-  `heart_id` int(50) NOT NULL,
-  `comment_id` int(50) NOT NULL,
-  `note_id` int(50) NOT NULL,
-  `user_name` int(50) NOT NULL,
-  `created_at` date NOT NULL,
-  FOREIGN KEY (comment_id) REFERENCES 'comment'(comment_id),
-  FOREIGN KEY (note_id) REFERENCES 'notes'(note_id),
-  FOREIGN KEY (user_name) REFERENCES users(user_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notes`
---
-
-CREATE TABLE `notes` (
-  `note_id` int(50) NOT NULL,
-  `user_name` int(50) NOT NULL COMMENT 'reference users',
-  `content` text NOT NULL,
-  `anonymous` tinyint(1) NOT NULL,
-  `created_at` date NOT NULL,
-  FOREIGN KEY (user_name) REFERENCES 'users'(user_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
---
-
 CREATE TABLE `users` (
-  `user_id` int(50) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` int(50) NOT NULL,
-  `created_at` date NOT NULL,
-  `profile_img` blob NOT NULL,
-  `bio` varchar(500) NOT NULL
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(50) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `created_at` DATE NOT NULL,
+  `profile_img` BLOB,
+  `bio` VARCHAR(500),
+  PRIMARY KEY (`user_id`),
+  UNIQUE (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Indexes for dumped tables
---
+-- --------------------------------------------------------
 
---
--- Indexes for table `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`comment_id`);
+-- Table structure for table `notes`
+CREATE TABLE `notes` (
+  `note_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `content` TEXT NOT NULL,
+  `anonymous` TINYINT(1) NOT NULL,
+  `created_at` DATE NOT NULL,
+  PRIMARY KEY (`note_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Indexes for table `hearts`
---
-ALTER TABLE `hearts`
-  ADD PRIMARY KEY (`heart_id`);
+-- --------------------------------------------------------
 
---
--- Indexes for table `notes`
---
-ALTER TABLE `notes`
-  ADD PRIMARY KEY (`note_id`);
+-- Table structure for table `comment`
+CREATE TABLE `comment` (
+  `comment_id` INT NOT NULL AUTO_INCREMENT,
+  `note_id` INT NOT NULL,
+  `user_id` INT,
+  `content` TEXT NOT NULL,
+  `anonymous` TINYINT(1) NOT NULL,
+  `created_at` DATE NOT NULL,
+  PRIMARY KEY (`comment_id`),
+  FOREIGN KEY (`note_id`) REFERENCES `notes` (`note_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `userName` (`user_name`),
-  ADD UNIQUE KEY `password` (`email`);
+-- --------------------------------------------------------
 
---
--- AUTO_INCREMENT for dumped tables
---
+-- Table structure for table `hearts`
+CREATE TABLE `hearts` (
+  `heart_id` INT NOT NULL AUTO_INCREMENT,
+  `comment_id` INT,
+  `note_id` INT,
+  `user_id` INT,
+  `created_at` DATE NOT NULL,
+  PRIMARY KEY (`heart_id`),
+  FOREIGN KEY (`comment_id`) REFERENCES `comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`note_id`) REFERENCES `notes` (`note_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- AUTO_INCREMENT for table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `comment_id` int(50) NOT NULL AUTO_INCREMENT;
+-- --------------------------------------------------------
 
---
--- AUTO_INCREMENT for table `hearts`
---
-ALTER TABLE `hearts`
-  MODIFY `heart_id` int(50) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `notes`
---
-ALTER TABLE `notes`
-  MODIFY `note_id` int(50) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT;
+-- Final cleanup
 COMMIT;
 
+-- Restore character set settings
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
