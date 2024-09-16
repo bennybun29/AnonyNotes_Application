@@ -33,8 +33,8 @@ CREATE TABLE `comment` (
   `user_name` int(50) NOT NULL COMMENT 'reference users',
   `content` text NOT NULL,
   `anonymous` tinyint(1) NOT NULL,
-  `created_at` date NOT NULL
-  FOREIGN KEY (note_id) REFERENCES notes(note_id)
+  `created_at` date NOT NULL,
+  FOREIGN KEY (note_id) REFERENCES 'notes'(note_id),
   FOREIGN KEY (user_name) REFERENCES users(user_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -49,9 +49,9 @@ CREATE TABLE `hearts` (
   `comment_id` int(50) NOT NULL,
   `note_id` int(50) NOT NULL,
   `user_name` int(50) NOT NULL,
-  `created_at` date NOT NULL
-  FOREIGN KEY (comment_id) REFERENCES comment(comment_id)
-  FOREIGN KEY (note_id) REFERENCES notes(note_id)
+  `created_at` date NOT NULL,
+  FOREIGN KEY (comment_id) REFERENCES 'comment'(comment_id),
+  FOREIGN KEY (note_id) REFERENCES 'notes'(note_id),
   FOREIGN KEY (user_name) REFERENCES users(user_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -66,8 +66,8 @@ CREATE TABLE `notes` (
   `user_name` int(50) NOT NULL COMMENT 'reference users',
   `content` text NOT NULL,
   `anonymous` tinyint(1) NOT NULL,
-  `created_at` date NOT NULL
-  FOREIGN KEY (user_name) REFERENCES users(user_name)
+  `created_at` date NOT NULL,
+  FOREIGN KEY (user_name) REFERENCES 'users'(user_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
