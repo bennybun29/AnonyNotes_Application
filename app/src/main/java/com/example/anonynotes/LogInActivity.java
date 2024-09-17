@@ -8,15 +8,19 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LogInActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
+
 
         // Set up the "Already have an account? Sign In" clickable text
         TextView textView = findViewById(R.id.tvSignUp);
@@ -42,7 +46,7 @@ public class LogInActivity extends AppCompatActivity {
         };
 
         // Set the clickable span from "Sign In" position to the end
-        spannableString.setSpan(clickableSpan, 25, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan, 23, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -74,6 +78,9 @@ public class LogInActivity extends AppCompatActivity {
 
         forgotPasswordTextView.setText(spannableForgotPasswordString);
         forgotPasswordTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+
 
     }
 
