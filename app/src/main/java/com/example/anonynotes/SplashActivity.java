@@ -41,7 +41,6 @@ public class SplashActivity extends AppCompatActivity {
             startSign_Up();
         } else {
             showNotificationBubble("Not connected to the internet");
-            // Recheck internet connection every 3 seconds
             runnable = new Runnable() {
                 @Override
                 public void run() {

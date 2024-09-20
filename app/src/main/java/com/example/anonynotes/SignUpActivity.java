@@ -20,6 +20,7 @@ public class SignUpActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.sign_up);
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         // Set up the "Already have an account? Sign In" clickable text
         TextView textView = findViewById(R.id.tvLogIn);
         String text = "Already have an account? Log In";

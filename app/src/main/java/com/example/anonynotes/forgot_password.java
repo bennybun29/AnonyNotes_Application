@@ -1,7 +1,9 @@
 package com.example.anonynotes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ public class forgot_password extends AppCompatActivity {
     private EditText etUsername;
     private View lineUsername;
     private View lineEmail;
+    private TextView backToLogin;
+    private Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +33,24 @@ public class forgot_password extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         lineUsername = findViewById(R.id.lineUsername);
         lineEmail = findViewById(R.id.lineEmail);
+        btnNext = findViewById(R.id.btnNext);
+        backToLogin = findViewById(R.id.backToLogIn);
 
         // Set initial state
         selectTextView(tvGetCodeUsername);
 
         tvGetCodeUsername.setOnClickListener(v -> selectTextView(tvGetCodeUsername));
         tvGetCodeEmail.setOnClickListener(v -> selectTextView(tvGetCodeEmail));
+
+        backToLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(forgot_password.this, LogInActivity.class);
+            startActivity(intent);
+        });
+
+        btnNext.setOnClickListener(v -> {
+            Intent intent = new Intent(forgot_password.this, Confirmation_Code.class);
+            startActivity(intent);
+        });
     }
 
     private void selectTextView(TextView selected) {

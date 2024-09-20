@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:material="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="#FFFFFF">
 
-    <!-- Logo -->
-    <ImageView
-        android:id="@+id/logo"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+    <!-- Logo -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Sign Up Title -->
     <TextView
@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
+        android:fontFamily="@font/inter_tight_semibold"
         android:textStyle="bold"
         android:textSize="40sp"
         android:layout_marginTop="5dp"
@@ -43,6 +44,7 @@
         android:id="@+id/SignUpDescTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_tight_semibold"
         android:text="Register with your email address."
         android:textStyle="bold"
         android:textSize="12sp"
@@ -58,11 +60,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/myLinearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUpDescTV"
+        android:layout_marginTop="10dp"
         app:layout_constraintVertical_bias="0.114">
 
         <TextView
@@ -70,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:text="Email Address"
+            android:fontFamily="@font/inter_tight_semibold"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -95,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
+            android:fontFamily="@font/inter_tight_semibold"
             android:text="Username"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -122,6 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:text="Password"
+            android:fontFamily="@font/inter_tight_semibold"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -132,6 +138,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="15dp"
+            app:passwordToggleEnabled="true"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/black">
 
@@ -148,6 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:text="Confirm Password"
+            android:fontFamily="@font/inter_tight_semibold"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -157,6 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
+            app:passwordToggleEnabled="true"
             android:layout_marginBottom="15dp"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/black">
@@ -175,9 +184,10 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:text="CREATE ACCOUNT"
+            android:fontFamily="@font/inter_tight_semibold"
             android:textSize="20sp"
-            app:cornerRadius="10dp"
-            app:backgroundTint="@color/black" />
+            app:backgroundTint="@color/black"
+            app:cornerRadius="10dp" />
 
     </LinearLayout>
 
@@ -207,6 +217,7 @@
             android:layout_weight="1"
             android:layout_margin="15dp"
             android:text="Continue with Google"
+            android:fontFamily="@font/inter_tight_semibold"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:icon="@drawable/google_logo"
@@ -223,10 +234,10 @@
             android:id="@+id/tvLogIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:text="Already have an account? Log In"
             android:textColor="#808080"
-            android:textSize="16sp"
-            android:padding="16dp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 
