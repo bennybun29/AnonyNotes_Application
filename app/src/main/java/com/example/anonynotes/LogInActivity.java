@@ -50,7 +50,7 @@ public class LogInActivity extends AppCompatActivity {
         };
 
         // Set the clickable span from "Sign In" position to the end
-        spannableString.setSpan(clickableSpan, 25, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan, 23, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
