@@ -8,16 +8,24 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LogInActivity extends AppCompatActivity {
+    private Button LogInBTN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
 
+        LogInBTN = findViewById(R.id.LogInBTN);
+
+        LogInBTN.setOnClickListener(v -> {
+            Intent intent = new Intent(LogInActivity.this, startup_page.class);
+            startActivity(intent);
+        });
         // Set up the "Already have an account? Sign In" clickable text
         TextView textView = findViewById(R.id.tvSignUp);
         String text = "Don't have an account? Sign Up";
