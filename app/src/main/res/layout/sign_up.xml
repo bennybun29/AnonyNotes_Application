@@ -139,6 +139,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="15dp"
             app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/black">
 
@@ -146,7 +147,8 @@
                 android:id="@+id/ETPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,6 +168,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
             android:layout_marginBottom="15dp"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/black">
@@ -174,7 +177,8 @@
                 android:id="@+id/ETConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,6 +188,7 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:text="CREATE ACCOUNT"
+            android:textColor="@color/white"
             android:fontFamily="@font/inter_tight_semibold"
             android:textSize="20sp"
             app:backgroundTint="@color/black"

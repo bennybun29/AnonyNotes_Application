@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/Home_img"
+        android:layout_width="374dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="25dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="anonynotes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_logo" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/Home_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp">
+
+        <!--Dito ilalagay mga post-->
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <ImageButton
+        android:id="@+id/ProfileButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/maleuser"
+        android:contentDescription="User"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Quillpen" />
+
+    <ImageButton
+        android:id="@+id/HomeButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/home"
+        android:contentDescription="Home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Quillpen"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/Quillpen"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/quillpen"
+        android:contentDescription="Quill"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ProfileButton"
+        app:layout_constraintHorizontal_bias="0.518"
+        android:backgroundTint="@null"
+        app:layout_constraintStart_toEndOf="@+id/HomeButton" />
+
+    <View
+        android:layout_width="50dp"
+        android:layout_height="4dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/HomeButton"
+        app:layout_constraintStart_toStartOf="@id/HomeButton"
+        app:layout_constraintEnd_toEndOf="@id/HomeButton"
+        android:layout_marginTop="4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
