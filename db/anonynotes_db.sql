@@ -18,8 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 -- Database: `anonynotes_db2`
-CREATE DATABASE anonynotes_db;
-USE anonynotes_db;
+CREATE DATABASE anonynotes_db2;
+USE anonynotes_db2;
 
 -- --------------------------------------------------------
 
