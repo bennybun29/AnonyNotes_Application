@@ -41,12 +41,12 @@ CREATE TABLE `users` (
 -- Table structure for table `notes`
 CREATE TABLE `notes` (
   `note_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
+  `user_name` VARCHAR(50) NOT NULL,
   `content` TEXT NOT NULL,
   `anonymous` TINYINT(1) NOT NULL,
   `created_at` DATE NOT NULL,
   PRIMARY KEY (`note_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_name`) REFERENCES `users` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
