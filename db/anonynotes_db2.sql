@@ -55,13 +55,13 @@ CREATE TABLE `notes` (
 CREATE TABLE `comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `note_id` INT NOT NULL,
-  `user_id` INT,
+  `user_name` VARCHAR(50) NOT NULL,
   `content` TEXT NOT NULL,
   `anonymous` TINYINT(1) NOT NULL,
   `created_at` DATE NOT NULL,
   PRIMARY KEY (`comment_id`),
   FOREIGN KEY (`note_id`) REFERENCES `notes` (`note_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_name`) REFERENCES `users` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -71,12 +71,12 @@ CREATE TABLE `hearts` (
   `heart_id` INT NOT NULL AUTO_INCREMENT,
   `comment_id` INT,
   `note_id` INT,
-  `user_id` INT,
+  `user_name` VARCHAR(50) NOT NULL,
   `created_at` DATE NOT NULL,
   PRIMARY KEY (`heart_id`),
   FOREIGN KEY (`comment_id`) REFERENCES `comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`note_id`) REFERENCES `notes` (`note_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_name`) REFERENCES `users` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
