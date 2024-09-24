@@ -6,7 +6,7 @@ class CommentController {
     private $db;
 
     public function __construct() {
-        $this->db = (new Database())->connect();
+        $this->db = (new Database())->getConnection();
     }
 
     // Create a comment

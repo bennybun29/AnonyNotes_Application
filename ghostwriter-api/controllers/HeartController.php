@@ -6,7 +6,7 @@ class HeartController {
     private $db;
 
     public function __construct() {
-        $this->db = (new Database())->connect();
+        $this->db = (new Database())->getConnection();
     }
 
     // Add a heart
