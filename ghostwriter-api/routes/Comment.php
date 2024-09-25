@@ -12,5 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_GET['note_id'])) {
         $commentController->getComments($_GET['note_id']);
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $commentController->updateComment($data);
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $commentController->deleteComment($data);
 }
 ?>

@@ -30,7 +30,22 @@ class User {
 
         return $stmt->execute();
     }
+    
+    // Update User details
+    public function update() {
+        $query = "UPDATE " . $this->table . " SET user_name = ?, email = ?, password = ?, bio = ?, profile_img = ? WHERE user_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$this->user_name, $this->email, $this->password, $this->bio, $this->profile_img, $this->user_id]);
+    }
 
+    // Delete user
+    public function delete() {
+        $query = "DELETE FROM " . $this->table . " WHERE user_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$this->user_id]);
+    }
+
+    // Login 
     public function login($email, $password) {
         $query = "SELECT * FROM " . $this->table . " WHERE email = :email AND password = :password";
         $stmt = $this->conn->prepare($query);
@@ -43,6 +58,7 @@ class User {
         return $stmt->rowCount() > 0;
     }
 
+    //Get User by Email
     public function getUserByEmail($email) {
         $query = "SELECT * FROM " . $this->table . " WHERE email = :email";
         $stmt = $this->conn->prepare($query);
@@ -51,5 +67,14 @@ class User {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Get all User
+    public function readAll() {
+        $query = "SELECT * FROM " . $this->table;
+        $stmt = $this->conn->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Returns all users as an associative array
+    }
+
 }
 ?>

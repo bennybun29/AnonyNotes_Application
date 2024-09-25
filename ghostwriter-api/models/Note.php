@@ -13,6 +13,7 @@ class Note {
         $this->conn = $db;
     }
 
+    //Create a note
     public function create() {
         $query = "INSERT INTO " . $this->table . " 
                   (user_name, content, anonymous, created_at) 
@@ -26,12 +27,37 @@ class Note {
 
         return $stmt->execute();
     }
-
+    
+    // Read all notes
     public function read() {
         $query = "SELECT * FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
+
+     // Read a note by ID
+     public function read($id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE note_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Returns the note's data
+    }
+
+    // Update a note
+    public function update() {
+        $query = "UPDATE " . $this->table . " SET content = ?, anonymous = ? WHERE note_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$this->content, $this->anonymous, $this->note_id]);
+    }
+
+       // Delete a note
+       public function delete() {
+        $query = "DELETE FROM " . $this->table . " WHERE note_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$this->note_id]);
+    }
+
 }
 ?>

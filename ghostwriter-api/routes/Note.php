@@ -9,6 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $noteController->createNote($data);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $noteController->getNotes();
+    if (isset($_GET['note_id'])) {
+        $noteController->getNoteById($_GET['note_id']);
+    } else {
+        $noteController->getNotes();
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $noteController->updateNote($data);
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $noteController->deleteNote($data);
 }
 ?>

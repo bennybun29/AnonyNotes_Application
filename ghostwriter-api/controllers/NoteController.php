@@ -1,32 +1,54 @@
 <?php
-require_once '../config/Database.php';
+require '../models/Note.php';
 
 class NoteController {
-
-    private $db;
+    private $note;
 
     public function __construct() {
-        $this->db = (new Database())->getConnection();
+        $this->note = new Note((new Database())->getConnection());
     }
 
     // Create a note
     public function createNote($data) {
-        $query = "INSERT INTO notes (user_name, content, anonymous, created_at) VALUES (:user_name, :content, :anonymous, NOW())";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':user_name', $data['user_name']);
-        $stmt->bindParam(':content', $data['content']);
-        $stmt->bindParam(':anonymous', $data['anonymous']);
-        $stmt->execute();
-        echo json_encode(['message' => 'Note created successfully']);
+        $this->note->user_name = $data['user_name'];
+        $this->note->content = $data['content'];
+        $this->note->anonymous = $data['anonymous'];
+        $this->note->created_at = date('Y-m-d H:i:s');
+
+        if ($this->note->create()) {
+            echo json_encode(['message' => 'Note created successfully.']);
+        } else {
+            echo json_encode(['message' => 'Note creation failed.']);
+        }
     }
 
-    // Retrieve all notes
+    // Get all notes
     public function getNotes() {
-        $query = "SELECT * FROM notes";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($notes);
+        $notes = $this->note->read();
+        echo json_encode($notes->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    // Get note by ID
+    public function getNoteById($id) {
+        $note = $this->note->read($id);
+        echo json_encode($note);
+    }
+
+    // Update a note
+    public function updateNote($data) {
+        $this->note->note_id = $data['note_id'];
+        $this->note->content = $data['content'];
+        $this->note->anonymous = $data['anonymous'];
+
+        $this->note->update();
+        echo json_encode(['message' => 'Note updated successfully.']);
+    }
+
+    // Delete a note
+    public function deleteNote($data) {
+        $this->note->note_id = $data['note_id'];
+        $this->note->delete();
+        echo json_encode(['message' => 'Note deleted successfully.']);
     }
 }
 ?>

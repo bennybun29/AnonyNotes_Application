@@ -12,5 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_GET['note_id'])) {
         $heartController->getHearts($_GET['note_id']);
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $heartController->removeHeart($data);
 }
 ?>

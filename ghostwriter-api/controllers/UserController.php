@@ -1,39 +1,71 @@
 <?php
-include_once '../config/Database.php';
-include_once '../models/User.php';
+require '../models/User.php';
 
 class UserController {
-    private $db;
     private $user;
 
     public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
-        $this->user = new User($this->db);
+        $this->user = new User((new Database())->getConnection());
     }
 
+    // Register a user
     public function register($data) {
         $this->user->user_name = $data['user_name'];
         $this->user->email = $data['email'];
-        $this->user->password = $data['password'];
-        $this->user->created_at = date('Y-m-d');
-        $this->user->profile_img = isset($data['profile_img']) ? $data['profile_img'] : null;
-        $this->user->bio = isset($data['bio']) ? $data['bio'] : null;
+        $this->user->password = $data['password']; // No hashing
+        $this->user->created_at = date('Y-m-d H:i:s');
+        $this->user->profile_img = $data['profile_img'] ?? null; // Optional
+        $this->user->bio = $data['bio'] ?? null; // Optional
 
-        if($this->user->create()) {
+        if ($this->user->create()) {
             echo json_encode(['message' => 'User registered successfully.']);
         } else {
             echo json_encode(['message' => 'User registration failed.']);
         }
     }
 
+    // Login a user
     public function login($data) {
-        if ($this->user->login($data['email'], $data['password'])) {
-            $userData = $this->user->getUserByEmail($data['email']);
-            echo json_encode($userData);
+        $email = $data['email'];
+        $password = $data['password'];
+
+        if ($this->user->login($email, $password)) {
+            echo json_encode(['message' => 'Login successful.']);
         } else {
-            echo json_encode(['message' => 'Login failed.']);
+            echo json_encode(['message' => 'Invalid email or password.']);
         }
+    }
+
+    // Update user details
+    public function updateUser($data) {
+        $this->user->user_id = $data['user_id'];
+        $this->user->user_name = $data['user_name'];
+        $this->user->email = $data['email'];
+        $this->user->password = $data['password']; // No hashing
+        $this->user->bio = $data['bio'] ?? null; // Optional
+        $this->user->profile_img = $data['profile_img'] ?? null; // Optional
+
+        $this->user->update();
+        echo json_encode(['message' => 'User details updated.']);
+    }
+
+    // Delete a user
+    public function deleteUser($data) {
+        $this->user->user_id = $data['user_id'];
+        $this->user->delete();
+        echo json_encode(['message' => 'User deleted.']);
+    }
+
+    // Get all users
+    public function getAllUsers() {
+        $users = $this->user->readAll();
+        echo json_encode($users);
+    }
+
+    // Get user by email
+    public function getUserByEmail($data) {
+        $user = $this->user->getUserByEmail($data['email']);
+        echo json_encode($user);
     }
 }
 ?>
