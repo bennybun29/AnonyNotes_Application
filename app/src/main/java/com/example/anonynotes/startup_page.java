@@ -24,6 +24,7 @@ public class startup_page extends AppCompatActivity {
         btnGetStarted.setOnClickListener(v -> {
             Intent intent = new Intent(startup_page.this, Home_Page.class);
             startActivity(intent);
+            finish();
         });
 
     }
