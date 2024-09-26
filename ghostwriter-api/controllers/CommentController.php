@@ -1,5 +1,6 @@
 <?php
 require '../models/Comment.php';
+require '../config/database.php';
 
 class CommentController {
     private $comment;

@@ -1,6 +1,6 @@
 <?php
 require '../models/User.php';
-
+require '../config/database.php';
 class UserController {
     private $user;
 
