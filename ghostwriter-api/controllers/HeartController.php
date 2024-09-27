@@ -1,6 +1,6 @@
 <?php
 require '../models/Heart.php';
-
+require '../config/database.php';
 class HeartController {
     private $heart;
 

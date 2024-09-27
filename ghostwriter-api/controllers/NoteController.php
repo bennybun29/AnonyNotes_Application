@@ -1,6 +1,6 @@
 <?php
 require '../models/Note.php';
-
+require '../config/database.php';
 class NoteController {
     private $note;
 
