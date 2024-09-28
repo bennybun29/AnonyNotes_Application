@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\comments;
+use App\Models\Comments;
 use Illuminate\Http\Request;
 
 class CommentsController

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\notes;
+use App\Models\Notes;
 use Illuminate\Http\Request;
 
 class NotesController

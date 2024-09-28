@@ -12,7 +12,10 @@ class Users extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    //table associated with this model
     protected $table ='users';
+
+    //fillable fields for mass assignment
     protected $fillable = [
         'user_id',
         'user_name',
@@ -46,4 +49,24 @@ class Users extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //Relationships with other tables
+
+    //relationship with the Notes model (User has many notes)
+     public function notes()
+     {
+         return $this->hasMany(Notes::class, 'user_name', 'user_name');
+     }
+ 
+     //relationship with the Comments model (User has many comments)
+     public function comments()
+     {
+         return $this->hasMany(Comments::class, 'user_name', 'user_name');
+     }
+ 
+     //relationship with the Hearts model (User can give many hearts)
+     public function hearts()
+     {
+         return $this->hasMany(Hearts::class, 'user_name', 'user_name');
+     }
 }

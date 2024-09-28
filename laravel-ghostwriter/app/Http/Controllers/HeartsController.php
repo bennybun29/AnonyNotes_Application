@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\hearts;
+use App\Models\Hearts;
 use Illuminate\Http\Request;
 
 class HeartsController
