@@ -5,61 +5,66 @@ namespace App\Http\Controllers;
 use App\Models\Notes;
 use Illuminate\Http\Request;
 
-class NotesController
+class NotesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Retrieve all notes
+        return Notes::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Validate and create a new note
+        $request->validate([
+            'user_name' => 'required|string',
+            'content' => 'required|string',
+            'anonymous' => 'required|boolean',
+        ]);
+
+        // Create a note
+        $note = Notes::create($request->all());
+
+        return response()->json($note, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(notes $notes)
+    public function show($id)
     {
-        //
+        // Find and show a specific note by ID
+        $note = Notes::find($id);
+
+        if (!$note) {
+            return response()->json(['message' => 'Note not found'], 404);
+        }
+
+        return response()->json($note);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(notes $notes)
+    public function update(Request $request, $id)
     {
-        //
+        // Update the specified note
+        $note = Notes::find($id);
+
+        if (!$note) {
+            return response()->json(['message' => 'Note not found'], 404);
+        }
+
+        $note->update($request->all());
+
+        return response()->json($note);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, notes $notes)
+    public function destroy($id)
     {
-        //
-    }
+        // Delete a note
+        $note = Notes::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(notes $notes)
-    {
-        //
+        if (!$note) {
+            return response()->json(['message' => 'Note not found'], 404);
+        }
+
+        $note->delete();
+
+        return response()->json(['message' => 'Note deleted']);
     }
 }

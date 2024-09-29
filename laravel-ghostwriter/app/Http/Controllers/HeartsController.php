@@ -5,61 +5,72 @@ namespace App\Http\Controllers;
 use App\Models\Hearts;
 use Illuminate\Http\Request;
 
-class HeartsController
+class HeartsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the hearts.
      */
     public function index()
     {
-        //
+        // Retrieves all hearts from the database
+        $hearts = Hearts::all();
+
+        return response()->json($hearts);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created heart (like).
      */
     public function store(Request $request)
     {
-        //
+        // Validates the incoming request data
+        $request->validate([
+            'comment_id' => 'nullable|integer|exists:comments,comment_id', // If present, must exist in comments
+            'note_id' => 'nullable|integer|exists:notes,note_id', // If present, must exist in notes
+            'user_name' => 'required|string|exists:users,user_name', // Must reference an existing user
+        ]);
+
+        // Creates a new heart using validated data
+        $heart = Hearts::create($request->all());
+
+        // Returns the newly created heart with a 201 (created) status
+        return response()->json($heart, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified heart.
      */
-    public function show(hearts $hearts)
+    public function show($id)
     {
-        //
+        // Find the heart by its ID
+        $heart = Hearts::find($id);
+
+        // If the heart doesn't exist, return a 404 error
+        if (!$heart) {
+            return response()->json(['message' => 'Heart not found'], 404);
+        }
+
+        // Return the found heart as JSON
+        return response()->json($heart);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Remove the specified heart (like).
      */
-    public function edit(hearts $hearts)
+    public function destroy($id)
     {
-        //
-    }
+        // Find the heart by ID
+        $heart = Hearts::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, hearts $hearts)
-    {
-        //
-    }
+        // If the heart doesn't exist, return a 404 error
+        if (!$heart) {
+            return response()->json(['message' => 'Heart not found'], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(hearts $hearts)
-    {
-        //
+        // Delete the heart (like)
+        $heart->delete();
+
+        // Return a success message
+        return response()->json(['message' => 'Heart (like) removed successfully']);
     }
 }

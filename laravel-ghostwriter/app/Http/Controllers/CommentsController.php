@@ -5,61 +5,99 @@ namespace App\Http\Controllers;
 use App\Models\Comments;
 use Illuminate\Http\Request;
 
-class CommentsController
+class CommentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the comments.
      */
     public function index()
     {
-        //
+        // Retrieves all comments from the database
+        $comments = Comments::all();
+
+        return response()->json($comments);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment.
      */
     public function store(Request $request)
     {
-        //
+        // Validates the incoming request data
+        $request->validate([
+            'note_id' => 'required|integer|exists:notes,note_id', // Ensures note_id exists in notes table
+            'user_name' => 'required|string|exists:users,user_name', // Ensures user_name exists in users table
+            'content' => 'required|string', // Ensures content is a string
+            'anonymous' => 'required|boolean', // Ensures anonymous is a boolean (true/false)
+        ]);
+
+        // Creates a new comment using validated data
+        $comment = Comments::create($request->all());
+
+        // Returns the newly created comment with a 201 (created) status
+        return response()->json($comment, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified comment.
      */
-    public function show(comments $comments)
+    public function show($id)
     {
-        //
+        // Find the comment by its ID
+        $comment = Comments::find($id);
+
+        // If the comment doesn't exist, return a 404 error
+        if (!$comment) {
+            return response()->json(['message' => 'Comment not found'], 404);
+        }
+
+        // Return the found comment as JSON
+        return response()->json($comment);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified comment.
      */
-    public function edit(comments $comments)
+    public function update(Request $request, $id)
     {
-        //
+        // Find the comment by ID
+        $comment = Comments::find($id);
+
+        // If the comment doesn't exist, return a 404 error
+        if (!$comment) {
+            return response()->json(['message' => 'Comment not found'], 404);
+        }
+
+        // Validates the request data for updating
+        $request->validate([
+            'content' => 'sometimes|required|string', // Update the content if present, must be a string
+            'anonymous' => 'sometimes|required|boolean', // Update the anonymous flag if present
+        ]);
+
+        // Update the comment with new data
+        $comment->update($request->all());
+
+        // Return the updated comment
+        return response()->json($comment);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Remove the specified comment.
      */
-    public function update(Request $request, comments $comments)
+    public function destroy($id)
     {
-        //
-    }
+        // Find the comment by ID
+        $comment = Comments::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(comments $comments)
-    {
-        //
+        // If the comment doesn't exist, return a 404 error
+        if (!$comment) {
+            return response()->json(['message' => 'Comment not found'], 404);
+        }
+
+        // Delete the comment
+        $comment->delete();
+
+        // Return a success message
+        return response()->json(['message' => 'Comment deleted successfully']);
     }
 }
