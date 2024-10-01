@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('user_name', 50); // Foreign key -> users table (user_name)
             $table->text('content'); // Comment content
             $table->boolean('anonymous'); // 1 = Anonymous 0 = user_name visible
-            $table->date('created_at'); // Date when the comment was created
+            $table->timestamps(); // Date when the comment was created
 
             // Foreign key constraints
             $table->foreign('note_id')

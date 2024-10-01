@@ -11,6 +11,7 @@ class Notes extends Model
 
     //table associated with this model
     protected $table = 'notes';
+    protected $primaryKey = 'note_id';  // Primary key for the table
 
     // Define fillable fields for mass assignment
     protected $fillable = [

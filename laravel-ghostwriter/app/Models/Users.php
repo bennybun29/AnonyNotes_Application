@@ -14,6 +14,7 @@ class Users extends Authenticatable
 
     //table associated with this model
     protected $table ='users';
+    protected $primaryKey = 'user_id';
 
     //fillable fields for mass assignment
     protected $fillable = [
@@ -37,6 +38,7 @@ class Users extends Authenticatable
         'remember_token',
     ];
 
+    
     /**
      * Get the attributes that should be cast.
      *

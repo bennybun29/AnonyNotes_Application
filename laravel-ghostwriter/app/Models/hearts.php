@@ -11,6 +11,7 @@ class Hearts extends Model
 
     // Specify the table associated with this model
     protected $table = 'hearts';
+    protected $primaryKey = 'heart_id'; // Specify the primary key for the table
 
     // Define fillable fields for mass assignment
     protected $fillable = [

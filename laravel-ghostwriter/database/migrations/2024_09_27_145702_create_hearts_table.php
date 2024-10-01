@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('comment_id')->nullable(); // Foreign key -> comments (optional)
             $table->unsignedBigInteger('note_id')->nullable(); // Foreign key -> notes (optional)
             $table->string('user_name', 50); // Foreign key -> users table (user_name)
-            $table->date('created_at'); // Date when the heart (like) was created
+            $table->timestamps(); // Date when the heart was created
 
             // Foreign key constraints
             $table->foreign('comment_id')

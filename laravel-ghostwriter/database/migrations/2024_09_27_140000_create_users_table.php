@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('user_name', 50)->unique(); // user_name with unique constraint
             $table->string('email', 50)->unique(); // Email with unique constraint
             $table->string('password'); 
-            $table->date('created_at'); // Created at field as date type
             $table->binary('profile_img')->nullable(); // Profile image as BLOB
             $table->string('bio', 500)->nullable(); // Bio field, limit of 500 characters
             $table->rememberToken(); // Token for remember me function
+            $table->timestamps(); // Timestamps handles created_at and updated_at
             
         });
 

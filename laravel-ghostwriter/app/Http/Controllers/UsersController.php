@@ -9,35 +9,48 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     /**
      * Register user.
      */
     public function register(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'user_name' => 'required|string|max:50|unique:users',
-            'email' => 'required|string|email|max:50|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        try {
+            // Validate the request data
+            $validatedData = $request->validate([
+                'user_name' => 'required|string|max:50|unique:users',
+                'email' => 'required|string|email|max:50|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
 
-        // Create a new user and hash the password
-        $user = Users::create([
-            'user_name' => $validatedData['user_name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']), // Hash the password
-            'created_at' => now(),
-        ]);
+            // Create a new user and hash the password
+            $user = Users::create([
+                'user_name' => $validatedData['user_name'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']), // Hash the password
+                'created_at' => now(),
+            ]);
 
-        // Generate an API token using Laravel Sanctum
-        $token = $user->createToken('auth_token')->plainTextToken;
+            // Generate an API token using Laravel Sanctum
+            if ($user !== null) {
+                $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'token' => $token,
-        ], 201);
+                return response()->json([
+                    'message' => 'User registered successfully',
+                    'token' => $token,
+                ], 201);
+            }
+
+            return response()->json([
+                'message' => 'Could not register the user, please try again later.',
+            ], 500);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while registering the user: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

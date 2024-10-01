@@ -11,6 +11,8 @@ class Comments extends Model
 
     // Specify the table associated with this model
     protected $table = 'comments';
+    protected $primaryKey = 'comment_id';// Set the primary key
+
 
     // Define fillable fields for mass assignment
     protected $fillable = [

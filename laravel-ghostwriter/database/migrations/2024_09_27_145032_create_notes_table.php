@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('user_name', 50); // Foreign key to reference the users table (user_name)
             $table->text('content'); // Note content
             $table->boolean('anonymous'); // Indicates if the note is anonymous
-            $table->date('created_at'); // Date when the note was created
+            $table->timestamps(); // Date when the note was created
 
             // Define foreign key constraint
             $table->foreign('user_name')
