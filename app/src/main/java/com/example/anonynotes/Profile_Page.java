@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Profile_Page extends AppCompatActivity {
     private ImageButton Quillpen;
     private ImageButton HomeButton;
+    private ImageButton SignOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,13 @@ public class Profile_Page extends AppCompatActivity {
 
             HomeButton = findViewById(R.id.HomeButton);
             Quillpen = findViewById(R.id.Quillpen);
+            SignOut = findViewById(R.id.SignOutButton);
+
+            SignOut.setOnClickListener(v -> {
+                Intent intent = new Intent(Profile_Page.this, EditProfile.class);
+                startActivity(intent);
+                finish();
+            });
 
             HomeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(Profile_Page.this, Home_Page.class);

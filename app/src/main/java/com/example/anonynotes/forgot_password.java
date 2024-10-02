@@ -7,11 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class forgot_password extends AppCompatActivity {
 
@@ -30,7 +26,7 @@ public class forgot_password extends AppCompatActivity {
 
         tvGetCodeUsername = findViewById(R.id.tvGetCodeUsername);
         tvGetCodeEmail = findViewById(R.id.tvGetCodeEmail);
-        etUsername = findViewById(R.id.etUsername);
+        etUsername = findViewById(R.id.etBio);
         lineUsername = findViewById(R.id.lineUsername);
         lineEmail = findViewById(R.id.lineEmail);
         btnNext = findViewById(R.id.btnNext);

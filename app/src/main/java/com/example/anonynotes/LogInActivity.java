@@ -2,17 +2,26 @@ package com.example.anonynotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.*;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
 
 public class LogInActivity extends AppCompatActivity {
     private EditText ETEmailUsername, ETPassword;
@@ -40,7 +49,37 @@ public class LogInActivity extends AppCompatActivity {
             // Send login data to the server
             sendLoginData(emailUsername, password);
         });
+
+        TextView textView = findViewById(R.id.tvSignUp); // Ensure the correct ID
+        String text = "Don't have an account? Sign Up";
+
+        SpannableString spannableString = new SpannableString(text);
+
+        // Make "Sign Up" clickable
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                // Redirect to SignUpActivity
+                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true); // Underline "Sign Up"
+                ds.setColor(getResources().getColor(android.R.color.black)); // Set color of "Sign Up"
+            }
+        };
+
+        // Set the clickable span from "Sign Up" position to the end
+        spannableString.setSpan(clickableSpan, 23, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Apply the spannable string to the TextView and enable clickable text
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
 
     private void sendLoginData(String emailUsername, String password) {
         String url = "http://10.0.2.2/ghostwriter-api/config/login.php";
