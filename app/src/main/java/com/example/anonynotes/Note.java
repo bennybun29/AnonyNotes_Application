@@ -10,7 +10,6 @@ public class Note {
         this.dateCreated = dateCreated;
         this.note = note;
     }
-
     public String getUsername() {
         return username;
     }

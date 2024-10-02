@@ -15,13 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.*;
-import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
 
 public class LogInActivity extends AppCompatActivity {
     private EditText ETEmailUsername, ETPassword;
@@ -50,6 +47,7 @@ public class LogInActivity extends AppCompatActivity {
             sendLoginData(emailUsername, password);
         });
 
+        // Setup clickable "Sign Up" text
         TextView textView = findViewById(R.id.tvSignUp); // Ensure the correct ID
         String text = "Don't have an account? Sign Up";
 
@@ -67,7 +65,7 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setUnderlineText(true); // Underline "Sign Up"
+                ds.setUnderlineText(false); // Underline "Sign Up"
                 ds.setColor(getResources().getColor(android.R.color.black)); // Set color of "Sign Up"
             }
         };
@@ -78,8 +76,38 @@ public class LogInActivity extends AppCompatActivity {
         // Apply the spannable string to the TextView and enable clickable text
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-    }
 
+        // Setup clickable "Forgot Password?" text
+        TextView forgotPasswordTV = findViewById(R.id.tvForgotPassword);
+        String forgotPasswordText = "Forgot Password?";
+
+        // Create a SpannableString for the Forgot Password text
+        SpannableString spannableForgotPassword = new SpannableString(forgotPasswordText);
+
+        // Make "Forgot Password?" clickable
+        ClickableSpan clickableForgotPassword = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                // Redirect to ForgotPasswordActivity
+                Intent intent = new Intent(LogInActivity.this, forgot_password.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false); // Underline the text
+                ds.setColor(getResources().getColor(android.R.color.black)); // Set color for "Forgot Password?"
+            }
+        };
+
+        // Apply the clickable span to the entire "Forgot Password?" text
+        spannableForgotPassword.setSpan(clickableForgotPassword, 0, forgotPasswordText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Set the clickable text and enable clickable movement
+        forgotPasswordTV.setText(spannableForgotPassword);
+        forgotPasswordTV.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
     private void sendLoginData(String emailUsername, String password) {
         String url = "http://10.0.2.2/ghostwriter-api/config/login.php";
