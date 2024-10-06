@@ -39,6 +39,7 @@ class UsersController extends Controller
                 return response()->json([
                     'message' => 'User registered successfully',
                     'token' => $token,
+                    'user' => $user
                 ], 201);
             }
 
@@ -69,8 +70,8 @@ class UsersController extends Controller
 
         // Check if the user exists and the password matches
         if (!$user || !Hash::check($validatedData['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+            return response()->json([
+                'message' => 'The provided email / password is incorrect.',
             ]);
         }
 
@@ -80,6 +81,7 @@ class UsersController extends Controller
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
+            'username' => $user->user_name,
         ]);
     }
 
