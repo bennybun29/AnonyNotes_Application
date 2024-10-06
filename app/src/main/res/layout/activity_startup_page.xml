@@ -52,7 +52,7 @@
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="259dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
         android:fontFamily="@font/inter_tight_semibold"
         android:text="Welcome,"
@@ -66,7 +66,7 @@
     <TextView
         android:id="@+id/tvWUsername"
         android:layout_width="259dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/inter_tight_semibold"

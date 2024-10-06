@@ -1,12 +1,15 @@
 package com.example.anonynotes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,20 +99,31 @@ public class SignUpActivity extends AppCompatActivity {
 
     // Method to send signup data to the server
     private void sendSignUpData(String email, String username, String password) {
-        // Your PHP script URL
-        String url = "http://10.0.2.2/ghostwriter-api/config/signup.php";  // Use 10.0.2.2 for localhost with XAMPP on an Android emulator
+        // Your API URL
+        String url = "http://10.0.2.2:8000/api/register";  // Use 10.0.2.2 for localhost with XAMPP on an Android emulator
 
-        RequestBody formBody = new FormBody.Builder()
-                .add("email", email)
-                .add("username", username)
-                .add("password", password)
-                .build();
+        // Create a JSON object with the required fields
+        JSONObject json = new JSONObject();
+        try {
+            json.put("email", email);
+            json.put("user_name", username);  // Ensure this matches what your API expects
+            json.put("password", password);
+            json.put("password_confirmation", password);  // If you have a separate confirmation field, use it here
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        // Create a request body with the JSON content
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(json.toString(), JSON);
+
+        // Build the request
         Request request = new Request.Builder()
                 .url(url)
-                .post(formBody)
+                .post(body)
                 .build();
 
+        // Send the request asynchronously
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -120,36 +134,80 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String responseData = response.body().string(); // Always read the response body first
                 if (response.isSuccessful()) {
-                    String responseData = response.body().string();
                     try {
-                        // Parse the JSON response
+                        // Parse the JSON response for a successful signup
                         JSONObject jsonResponse = new JSONObject(responseData);
-                        String status = jsonResponse.getString("status");
                         String message = jsonResponse.getString("message");
+                        String token = jsonResponse.getString("token");  // Extract token from the response
 
                         runOnUiThread(() -> {
-                            if (status.equals("success")) {
-                                Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
-                                // Optionally navigate to another activity
-
-                                // Navigate to the startup page after successful signup
-                                Intent intent = new Intent(SignUpActivity.this, startup_page.class); // Replace with your Startup activity
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
+                            // Navigate to the startup page after successful signup
+                            saveUsername(username);
+                            saveAuthToken(token);
+                            saveEmail(email);
+                            Intent intent = new Intent(SignUpActivity.this, startup_page.class);
+                            intent.putExtra("USERNAME", username); // Pass the username
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
                         });
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         runOnUiThread(() -> Toast.makeText(SignUpActivity.this, "Error parsing response", Toast.LENGTH_SHORT).show());
                     }
                 } else {
-                    runOnUiThread(() -> Toast.makeText(SignUpActivity.this, "Signup failed: " + response.message(), Toast.LENGTH_SHORT).show());
+                    // Handle specific error responses
+                    String errorMessage = "Signup failed. Please try again.";
+
+                    try {
+                        // Parse the error response to find a message
+                        JSONObject errorJson = new JSONObject(responseData);
+                        if (errorJson.has("message")) {
+                            errorMessage = errorJson.getString("message");
+                        } else if (errorJson.has("errors")) {
+                            JSONObject errors = errorJson.getJSONObject("errors");
+                            if (errors.has("user_name")) {
+                                errorMessage = "Account/Username already taken"; // Customize this message
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Log the error message for debugging
+                    Log.e("SignUpActivity", "Error response: " + responseData);
+
+                    String finalErrorMessage = errorMessage;
+                    runOnUiThread(() -> Toast.makeText(SignUpActivity.this, finalErrorMessage, Toast.LENGTH_SHORT).show());
                 }
             }
         });
+    }
+
+    // Method to save the username
+    private void saveUsername(String username) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("username", username);
+        editor.apply();
+    }
+
+    private void saveEmail(String email) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.apply();
+    }
+
+    // Method to save the authentication token
+    private void saveAuthToken(String token) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("auth_token", token);
+        editor.apply();
     }
 }

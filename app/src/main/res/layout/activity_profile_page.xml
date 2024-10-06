@@ -11,40 +11,41 @@
 
     <ImageView
         android:id="@+id/Home_img"
-        android:layout_width="280dp"
+        android:layout_width="330dp"
         android:layout_height="56dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
         android:contentDescription="anonynotes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/profile_logo" />
 
-    <ImageButton
-        android:id="@+id/SignOutButton"
-        android:layout_width="37dp"
-        android:layout_height="43dp"
-        android:layout_marginLeft="5dp"
-        android:background="@drawable/signoutbutton"
-        app:layout_constraintBottom_toBottomOf="@+id/Home_img"
-        app:layout_constraintStart_toEndOf="@+id/Home_img"
-        app:layout_constraintTop_toTopOf="@+id/Home_img" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/Home_img"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp">
+        app:layout_constraintBottom_toTopOf="@+id/Quillpen"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:layout_editor_absoluteX="10dp">
 
         <!--Dito ilalagay mga post ng User-->
 
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/black"
+        android:text="Edit Profile"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBioProfile" />
 
     <ImageButton
         android:id="@+id/ProfileButton"
@@ -84,6 +85,66 @@
         app:layout_constraintHorizontal_bias="0.518"
         android:backgroundTint="@null"
         app:layout_constraintStart_toEndOf="@+id/HomeButton" />
+
+    <!-- Line below the Edit Profile button -->
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editProfileButton" />
+
+    <ImageButton
+        android:id="@+id/burgerButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Home_img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_menu_24" />
+
+    <ImageView
+        android:id="@+id/profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Home_img"
+        app:srcCompat="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/tvUsernameProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/inter_bold"
+        android:hint="username"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        app:layout_constraintStart_toEndOf="@+id/profile"
+        app:layout_constraintTop_toBottomOf="@+id/Home_img" />
+
+    <TextView
+        android:id="@+id/tvBioProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/inter_light"
+        android:hint="Edit your bio using Edit Profile button."
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
 
     <View
         android:layout_width="50dp"

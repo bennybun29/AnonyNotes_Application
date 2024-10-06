@@ -45,6 +45,8 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("org.jsoup:jsoup:1.15.3") // Check for the latest version
+
 
 
 

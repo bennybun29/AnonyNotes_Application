@@ -1,7 +1,9 @@
 package com.example.anonynotes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -30,6 +32,9 @@ public class EditProfile_Username extends AppCompatActivity {
 
         btnBackToEditProfile.setOnClickListener(v -> showUnsavedChangesDialog());
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String username = sharedPreferences.getString("username", null);
+        etUsername.setText(username);
         // Character Counter
         etUsername.addTextChangedListener(new TextWatcher() {
             @Override
