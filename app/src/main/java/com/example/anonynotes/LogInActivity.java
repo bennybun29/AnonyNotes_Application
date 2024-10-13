@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +50,7 @@ public class LogInActivity extends AppCompatActivity {
         });
 
         // Setup clickable "Sign Up" text
-        TextView textView = findViewById(R.id.tvSignUp); // Ensure the correct ID
+        TextView textView = findViewById(R.id.tvSignUp);
         String text = "Don't have an account? Sign Up";
 
         SpannableString spannableString = new SpannableString(text);
@@ -113,7 +114,6 @@ public class LogInActivity extends AppCompatActivity {
         editor.apply();
     }
 
-
     private void saveAuthToken(String token) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -121,7 +121,20 @@ public class LogInActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private void saveUserId(String userId) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("user_id", userId); // Store the user ID
+        editor.apply();
+        Log.d("Preferences", "User ID saved: " + userId); // Debug log
+    }
 
+    private void saveAccountCreatedDate(String created_at) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("created_at", created_at); // Store the user ID
+        editor.apply();
+    }
 
     private void sendLoginData(String emailUsername, String password) {
         String url = "http://10.0.2.2:8000/api/login";  // Make sure this URL is correct
@@ -152,16 +165,22 @@ public class LogInActivity extends AppCompatActivity {
                         String message = jsonResponse.getString("message");
                         String token = jsonResponse.optString("token", null); // Get token if available
                         String username = jsonResponse.optString("username", null);
+                        String userId = jsonResponse.optString("user_id", null); // Get user ID from response
+                        String created_at = jsonResponse.optString("created_at", null);
 
                         runOnUiThread(() -> {
                             Toast.makeText(LogInActivity.this, message, Toast.LENGTH_SHORT).show();
                             if (token != null) {
-                                // Redirect to Home Page and store token if needed
+                                // Redirect to Home Page and store token, username, and user ID if needed
                                 saveAuthToken(token);
                                 saveUsername(username);
                                 saveEmail(emailUsername);
-                                Intent intent = new Intent(LogInActivity.this, Home_Page.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                saveAccountCreatedDate(created_at);
+                                if (userId != null) {
+                                    saveUserId(userId); // Save user ID
+                                }
+                                Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // This clears the back stack
                                 startActivity(intent);
                                 finish();
                             }

@@ -25,46 +25,45 @@
                 android:layout_width="88dp"
                 android:layout_height="86dp"
                 android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_view_replies"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintVertical_bias="0.024"
                 app:srcCompat="@drawable/profile" />
 
             <TextView
-                android:id="@+id/tvUsername"
+                android:id="@+id/tvMainUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
                 android:hint="Username"
-                android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/dateCreated"
+                android:id="@+id/tvdateCreated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="7dp"
                 android:hint="00/00/00"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/tvUsername"
+                app:layout_constraintStart_toEndOf="@+id/tvMainUsername"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvNote"
-                android:layout_width="0dp"
+                android:id="@+id/tvMainNote"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
                 android:hint="User's note goes here..."
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-                app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMainUsername" />
 
             <ImageButton
                 android:id="@+id/heartButton"
@@ -74,7 +73,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-                app:layout_constraintTop_toBottomOf="@+id/tvNote"
+                app:layout_constraintTop_toBottomOf="@+id/tvMainNote"
                 app:srcCompat="@drawable/heartbutton" />
 
             <TextView
@@ -85,37 +84,44 @@
                 android:layout_marginTop="12dp"
                 android:text="0"
                 app:layout_constraintStart_toEndOf="@+id/heartButton"
-                app:layout_constraintTop_toBottomOf="@+id/tvNote" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMainNote" />
 
             <ImageButton
-                android:id="@+id/commentButton"
+                android:id="@+id/imageButton"
                 android:layout_width="27dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 app:layout_constraintStart_toEndOf="@+id/tvHeartCounter"
-                app:layout_constraintTop_toBottomOf="@+id/tvNote"
+                app:layout_constraintTop_toBottomOf="@+id/tvMainNote"
                 app:srcCompat="@drawable/baseline_comment_24" />
 
             <TextView
                 android:id="@+id/tvCommentCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="3dp"
                 android:layout_marginTop="12dp"
                 android:text="0"
-                app:layout_constraintStart_toEndOf="@+id/commentButton"
-                app:layout_constraintTop_toBottomOf="@+id/tvNote" />
+                app:layout_constraintStart_toEndOf="@+id/imageButton"
+                app:layout_constraintTop_toBottomOf="@+id/tvMainNote" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_replies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+
     </androidx.cardview.widget.CardView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

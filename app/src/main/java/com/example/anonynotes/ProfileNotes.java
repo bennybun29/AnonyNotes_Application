@@ -1,9 +1,10 @@
 package com.example.anonynotes;
 
-public class Note {
+public class ProfileNotes {
+
     private String username, dateCreated, content, id;
 
-    public Note(String username, String dateCreated, String content) {
+    public ProfileNotes(String username, String dateCreated, String content) {
         this.username = username;
         this.dateCreated = dateCreated;
         this.content = content;

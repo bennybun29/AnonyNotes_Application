@@ -141,6 +141,8 @@ public class SignUpActivity extends AppCompatActivity {
                         JSONObject jsonResponse = new JSONObject(responseData);
                         String message = jsonResponse.getString("message");
                         String token = jsonResponse.getString("token");  // Extract token from the response
+                        String userId = jsonResponse.optString("user_id", null);
+                        String created_at = jsonResponse.optString("created_at", null);
 
                         runOnUiThread(() -> {
                             Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -148,11 +150,15 @@ public class SignUpActivity extends AppCompatActivity {
                             saveUsername(username);
                             saveAuthToken(token);
                             saveEmail(email);
+                            saveAccountCreatedDate(created_at);
+                            if (userId != null) {
+                                saveUserId(userId); // Save user ID
+                            }
                             Intent intent = new Intent(SignUpActivity.this, startup_page.class);
-                            intent.putExtra("USERNAME", username); // Pass the username
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // This clears the back stack
                             startActivity(intent);
                             finish();
+
                         });
 
                     } catch (JSONException e) {
@@ -200,6 +206,20 @@ public class SignUpActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email", email);
+        editor.apply();
+    }
+
+    private void saveUserId(String userId) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("user_id", userId); // Store the user ID
+        editor.apply();
+    }
+
+    private void saveAccountCreatedDate(String created_at) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("created_at", created_at); // Store the user ID
         editor.apply();
     }
 

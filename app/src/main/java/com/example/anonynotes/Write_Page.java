@@ -6,9 +6,13 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +32,7 @@ public class Write_Page extends AppCompatActivity {
     private Button submit;
     private ImageButton homeButton;
     private ImageButton profileButton;
+    private TextView charCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,35 +43,63 @@ public class Write_Page extends AppCompatActivity {
         homeButton = findViewById(R.id.HomeButton);
         write_input = findViewById(R.id.write_input);
         submit = findViewById(R.id.submit);
+        charCount = findViewById(R.id.char_count);
 
+
+        write_input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                charCount.setText(charSequence.length() + "/2000");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
         profileButton.setOnClickListener(v -> {
             Intent intent = new Intent(Write_Page.this, Profile_Page.class);
             startActivity(intent);
+            finish();
         });
 
         homeButton.setOnClickListener(v -> {
             Intent intent = new Intent(Write_Page.this, Home_Page.class);
             startActivity(intent);
+            finish();
         });
 
         submit.setOnClickListener(v -> {
             String content = write_input.getText().toString();
             if (!content.isEmpty()) {
-                // Retrieve username from SharedPreferences
-                SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+                // Retrieve username and userId from SharedPreferences
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String username = preferences.getString("username", null);
+                String userIdString = preferences.getString("user_id", null); // Retrieve user_id as a string
+                Log.d("Preferences", "User ID retrieved: " + userIdString);
 
-
-                // Pass the username to the method
-                sendNoteToServer(username, content, false); // 'false' for anonymous (or 'true' as needed)
-                System.out.println("Submitting note with content: " + content); // Log the content being submitted
+                if (userIdString != null) { // Check if userId is valid
+                    try {
+                        int userId = Integer.parseInt(userIdString); // Convert userId to integer
+                        sendNoteToServer(username, content, false, userId); // Pass userId as an integer
+                        System.out.println("Submitting note with content: " + content); // Log the content being submitted
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(Write_Page.this, "Invalid User ID format. Please log in again.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Write_Page.this, "User ID not found. Please log in again.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(Write_Page.this, "Please enter some content.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void sendNoteToServer(String username, String content, boolean anonymous) {
+    private void sendNoteToServer(String username, String content, boolean anonymous, int userId) {
         // Show loading indicator
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Submitting note...");
@@ -79,15 +112,12 @@ public class Write_Page extends AppCompatActivity {
                 OkHttpClient client = new OkHttpClient();
                 MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
-                // Retrieve the username from SharedPreferences
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Write_Page.this);
-                String username = preferences.getString("username", null); // Use the same key
-
                 JSONObject json = new JSONObject();
                 try {
-                    json.put("user_name", username); // This will now be the correct username
+                    json.put("user_name", username); // Use username from SharedPreferences
                     json.put("content", content);
                     json.put("anonymous", anonymous ? 1 : 0); // Send 1 for true (anonymous) or 0 for false
+                    json.put("user_id", userId); // Include user_id in the JSON payload as an integer
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -96,6 +126,7 @@ public class Write_Page extends AppCompatActivity {
                 System.out.println("Request Body: " + json.toString());
 
                 // Retrieve the token from SharedPreferences
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Write_Page.this);
                 String token = preferences.getString("auth_token", null);
 
                 RequestBody body = RequestBody.create(json.toString(), JSON);
@@ -128,6 +159,7 @@ public class Write_Page extends AppCompatActivity {
                     // Navigate back to Home_Page
                     Intent intent = new Intent(Write_Page.this, Home_Page.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     // Notify user of failure
                     Toast.makeText(Write_Page.this, "Failed to submit note. Please try again.", Toast.LENGTH_SHORT).show();
@@ -135,5 +167,4 @@ public class Write_Page extends AppCompatActivity {
             }
         }.execute();
     }
-
 }

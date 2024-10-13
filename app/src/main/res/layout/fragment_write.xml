@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".WriteFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".MainActivity"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:id="@+id/Write_img"
+            android:layout_width="374dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="25dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="anonynotes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/write" />
+
+        <ImageView
+            android:id="@+id/tuxedo_img"
+            android:layout_width="120dp"
+            android:layout_height="114dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp"
+            android:contentDescription="anonymous"
+            android:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Write_img"
+            app:srcCompat="@drawable/profile" />
+
+        <LinearLayout
+            android:id="@+id/leeniar"
+            android:layout_width="345dp"
+            android:layout_height="450dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="-40dp"
+            android:layout_marginEnd="100dp"
+            android:background="@drawable/linear_border"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tuxedo_img">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="What's on your mind?"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="A joke, funny story, embarrassing moment?"
+                android:textColor="#888888"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/write_input"
+                android:layout_width="325dp"
+                android:layout_height="328dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/edit_text_border"
+                android:gravity="top|start"
+                android:hint="Write Something"
+                android:inputType="textMultiLine"
+                android:maxLength="2000"
+                android:paddingStart="7dp"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/char_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:padding="8dp"
+                android:text="0/2000" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/submit"
+            app:layout_constraintTop_toBottomOf="@id/leeniar"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/black"
+            android:text="Submit"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.478"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

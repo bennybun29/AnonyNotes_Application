@@ -29,10 +29,14 @@ public class EditProfile extends AppCompatActivity {
         editUsername = findViewById(R.id.editUsername);
 
         btnBackToProfilePage.setOnClickListener(v -> {
-            Intent intent = new Intent(EditProfile.this, Profile_Page.class);
-            startActivity(intent);
-            finish();
+
+            ProfileFragment profileFragment = new ProfileFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, profileFragment) // Replace with your fragment container ID
+                    .addToBackStack(null) // Optional: Add to back stack to allow back navigation
+                    .commit();
         });
+
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String username = sharedPreferences.getString("username", null);

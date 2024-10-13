@@ -1,0 +1,9 @@
+<resources>
+    <!-- Custom style for the menu items -->
+    <style name="CustomBottomNavigationStyle" parent="Widget.Design.BottomNavigationView">
+        <!-- Text size for the title -->
+        <item name="android:textSize">25sp</item> <!-- Adjust the size as needed -->
+        <!-- Icon size -->
+        <item name="itemIconSize">32dp</item> <!-- Adjust icon size as needed -->
+    </style>
+</resources>

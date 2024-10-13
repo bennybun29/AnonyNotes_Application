@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -21,18 +22,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/profile_logo" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/Quillpen"
         app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="10dp">
-
         <!--Dito ilalagay mga post ng User-->
-
-
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
@@ -83,14 +81,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ProfileButton"
         app:layout_constraintHorizontal_bias="0.518"
-        android:backgroundTint="@null"
         app:layout_constraintStart_toEndOf="@+id/HomeButton" />
 
     <!-- Line below the Edit Profile button -->
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_marginTop="10dp"
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,6 +152,60 @@
         app:layout_constraintEnd_toEndOf="@id/ProfileButton"
         android:layout_marginTop="4dp" />
 
+    <!-- Menu Options Layout (Initially Hidden) -->
+    <LinearLayout
+        android:id="@+id/menu_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_ng_tatlobutton"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <!-- Add buttons or items inside the menu as needed -->
+        <Button
+            android:id="@+id/account_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/account_status"
+            android:text="Account Status"
+            android:textColor="#FF000000"
+            android:textSize="10dp"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            />
+
+        <Button
+            android:id="@+id/change_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/password_reset"
+            android:text="Change Password"
+            android:textColor="#FF000000"
+            android:textSize="10dp"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/signoutbutton"
+            android:text="Logout"
+            android:textColor="#FF000000"
+            android:textSize="10dp"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
